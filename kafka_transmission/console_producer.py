@@ -1,12 +1,16 @@
 from kafka import KafkaProducer
 import sys
 import json
+import configparser
 
-SERVER_IP = 'NUC의 IP를 설정해 주세요'
-producer = KafkaProducer(bootstrap_servers=[f'{SERVER_IP}:9092'], value_serializer=lambda m: json.dumps(m).encode('utf-8'))
-topic = 'chat'
+config = configparser.ConfigParser()
+config.read('./config.conf')
+
+server_ip = config.get('Broker', 'SERVER_IP')
+topic = config.get('Broker', 'TOPIC')
+
+producer = KafkaProducer(bootstrap_servers=[f'{server_ip}:9092'], value_serializer=lambda m: json.dumps(m).encode('utf-8'))
 content = 'Python으로 메시지 보내기~'
-#content = 'python message'
 
 k = 0
 while True:
@@ -24,7 +28,3 @@ while True:
 
 
 producer.flush()
-
-
-
-
