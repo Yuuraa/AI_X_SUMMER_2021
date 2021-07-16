@@ -8,25 +8,9 @@ import os
 import argparse
 
 from landmark_utils import show_raw_landmarks, show_landmark_shape
-import pafy
-
-
-# Youtube의 동영상 스트림을 받아오는 클래스입니다
-class YoutubeStream:
-    def __init__(self, url):
-        self.url = url
-        self.youtube_video = self.get_video(url)
-    
-    def get_video(self, url):
-        video = pafy.new(url)
-        best = video.getbest(preftype="mp4")
-        video = cv2.VideoCapture(best.url) 
-        return video
-    
-    def get_stream(self):
-        while True:
-            ret, frame = self.youtube_video.read()
-            yield ret, frame
+import sys
+sys.path.insert(0, '../utils')
+from youtube_video import YoutubeStream
 
 
 if __name__ == "__main__":
