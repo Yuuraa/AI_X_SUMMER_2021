@@ -15,7 +15,7 @@ def produce_videostream(device_path):
     # 비디오를 읽어옵니다
     while video.isOpened():
         ret, frame = video.read()
-        if not read:
+        if not ret:
             print("비디오를 읽는 과정에서 오류가 발생했습니다")
             break
         
@@ -35,7 +35,7 @@ def produce_videostream(device_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--topic", default='pi-video')
-	args = parser.parse_args()
+    args = parser.parse_args()
 
     # Broker 서버의 IP 주소와 사용할 topic 설정을 읽어옵니다
     server_ip = os.environ.get("SERVER_IP")
