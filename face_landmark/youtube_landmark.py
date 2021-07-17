@@ -16,7 +16,7 @@ from youtube_video import YoutubeStream
 if __name__ == "__main__":
     # 인자로 데이터의 경로를 받습니다
     parser = argparse.ArgumentParser()
-    parser.add_argument("--show_parts", type=bool, default=False)
+    # parser.add_argument("--show_parts", type=bool, default=False)
     parser.add_argument("--youtube_url", type=str, default="https://youtu.be/YLXfyHsfFz0")
     args = parser.parse_args()
 
