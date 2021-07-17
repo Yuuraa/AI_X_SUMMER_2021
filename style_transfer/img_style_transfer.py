@@ -10,10 +10,10 @@ from style_transfer_functions import StyleTransferNet
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--img_path", default="../dataset/objects/dog_bicycle.jpg")
-    parser.add_argument("--model_name", default="/home/yura/AI_X_SUMMER_2021/style_transfer/models/mosaic_light.onnx")
+    parser.add_argument("--style_name", default="/home/yura/AI_X_SUMMER_2021/style_transfer/models/mosaic_light.onnx")
     args = parser.parse_args()
 
-    model = StyleTransferNet(args.model_name)
+    model = StyleTransferNet(args.style_name)
 
     image_path = args.img_path
     img = cv2.imread(image_path)

@@ -10,7 +10,7 @@ from landmark_utils import show_raw_landmarks, show_landmark_shape
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--image_path", type=str, default="../dataset/single_face/jimin.jpg")
+    parser.add_argument("--img_path", type=str, default="../dataset/single_face/jimin.jpg")
     parser.add_argument("--show_parts", type=bool, default=False)
     args = parser.parse_args()
 
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
     # 얼굴을 찾을 이미지를 읽어옵니다
-    image = cv2.imread(args.image_path)
+    image = cv2.imread(args.img_path)
     image = imutils.resize(image, width=500)
 
     show_landmark_shape(image, detector, predictor, args.show_parts)
