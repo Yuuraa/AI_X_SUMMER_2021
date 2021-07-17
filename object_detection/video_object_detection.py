@@ -11,6 +11,7 @@ if __name__ == "__main__":
     parser.add_argument("--weight_path", type=str, default="./yolov3-tiny.weights")
     parser.add_argument("--cfg_path", type=str, default="./yolov3-tiny.cfg")
     parser.add_argument("--class_path", type=str, default="./coco.names")
+    parser.add_argument("--topic", type=str, default="pi-video")
     args = parser.parse_args()
 
     # Model 정의
@@ -20,7 +21,7 @@ if __name__ == "__main__":
 
     # Kafka consumer 정의
     server_ip = os.environ.get('SERVER_IP')
-    consumer = KafkaConsumer('pi-video', bootstrap_servers=f"{server_ip}:9092")
+    consumer = KafkaConsumer(args.topic, bootstrap_servers=f"{server_ip}:9092")
 
     classes = read_classes(args.class_path)
     
