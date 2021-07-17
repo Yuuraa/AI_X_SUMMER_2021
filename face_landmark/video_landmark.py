@@ -15,6 +15,7 @@ if __name__ == "__main__":
     # 인자로 데이터의 경로를 받습니다
     parser = argparse.ArgumentParser()
     parser.add_argument("--show_parts", type=bool, default=False)
+    parser.add_argument("--topic", type=str, default='pi-video')
     args = parser.parse_args()
 
     # Kakfa와 연결해 pi-video topic을 구독합니다
@@ -32,7 +33,7 @@ if __name__ == "__main__":
         image = cv2.imdecode(array, 1)
         image = imutils.resize(image, width=500) # 이미지의 크기를 줄입니다
 
-        show_landmark_shape(image, detector, predictor)
+        show_landmark_shape(image, detector, predictor, args.show_parts)
 
         if cv2.waitKey(1) > 0:
             break

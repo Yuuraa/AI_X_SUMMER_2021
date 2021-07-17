@@ -12,10 +12,10 @@ from kafka import KafkaConsumer
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--topic", default="pi-video")
-    parser.add_argument("--model_name", default="/home/yura/AI_X_SUMMER_2021/style_transfer/models/mosaic_light.onnx")
+    parser.add_argument("--style_path", default="/home/yura/AI_X_SUMMER_2021/style_transfer/models/mosaic_light.onnx")
     args = parser.parse_args()
 
-    model = StyleTransferNet(args.model_name)
+    model = StyleTransferNet(args.style_path)
 
     server_ip = os.environ.get("SERVER_IP")
     consumer = KafkaConsumer(args.topic, bootstrap_servers=f"{server_ip}:9092")
