@@ -1,20 +1,11 @@
 import time
 import sys
-import configparser
+import argparse
 import cv2
+import os
 
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
-
-
-# Broker 서버의 IP 주소와 사용할 topic 설정을 읽어옵니다
-config = configparser.ConfigParser()
-config.read("./config.conf")
-server_ip = config.get('Broker', 'SERVER_IP')
-topic = config.get('Broker', 'TOPIC')
-
-# Kafka Producer를 선언합니다
-producer = KafkaProducer(bootstrap_servers=f'{server_ip}:9092')
 
 # 카메라 입력으로부터 계속해서 이미지를 생성합니다
 def produce_videostream(device_path):
@@ -26,10 +17,10 @@ def produce_videostream(device_path):
 		success, frame = video.read()
 		if not success: 
 			break
-
+		
 		# 이미지 파일을 전송하기 위해 바이트로 인코딩합니다
 		data = cv2.imencode('.jpeg', frame)[1].tobytes()
-
+		
 		# 이미지 데이터를 전송합니다
 		future = producer.send(topic, data)
 		try:
@@ -40,5 +31,17 @@ def produce_videostream(device_path):
 		print('.', end='', flush=True)
 
 
-produce_videostream(0)
-# 0 번째 카메라 장치를 사용합니다
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--topic", default='pi-video')
+	args = parser.parse_args()
+
+	# Broker 서버의 IP 주소와 사용할 topic 설정을 읽어옵니다
+	server_ip = os.environ.get("SERVER_IP")
+	topic = args.topic
+
+	# Kafka Producer를 선언합니다
+	producer = KafkaProducer(bootstrap_servers=f'{server_ip}:9092')
+
+	produce_videostream(0)
+	# 0 번째 카메라 장치를 사용합니다
