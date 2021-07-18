@@ -14,16 +14,17 @@ from style_transfer_functions import StyleTransferNet
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--youtube_url", type=str, default="https://youtu.be/YLXfyHsfFz0")
-    parser.add_argument("--model_name", default="/home/yura/AI_X_SUMMER_2021/style_transfer/models/mosaic_light.onnx")
+    parser.add_argument("--style_path", default="/home/yura/AI_X_SUMMER_2021/style_transfer/models/mosaic_light.onnx")
+    parser.add_argument("--skip_ratio", type=int, default=10)
     args = parser.parse_args()
 
     # 모델으르 정의합니다
-    model = StyleTransferNet(args.model_name)
+    model = StyleTransferNet(args.style_path)
 
     # 유튜브 동영상을 생성합니다
     video = YoutubeStream(args.youtube_url)
 
-    SKIP_RATIO = 10 # 추론하는 데 시간이 오래 걸리기 때문에, 영상을 스킵하며 추론하도록 했습니다
+    SKIP_RATIO = args.skip_ratio # 추론하는 데 시간이 오래 걸리기 때문에, 프레임을 스킵하며 추론하도록 했습니다
     print("스타일 변환을 수행합니다. esc 키를 누르면 종료합니다")
     for i, (ret, frame) in enumerate(video.get_stream()):
         if not ret:
