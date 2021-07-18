@@ -78,7 +78,3 @@ if __name__ == "__main__":
     show_detected_objects(image, outs, classes, threshold=THRESHOLD)
 
     cv2.waitKey(0)
-
-
-
-
